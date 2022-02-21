@@ -14,7 +14,7 @@ public class PasswordValidator
     private Matcher matcher;
 
     private static final String PASSWORD_REGEX =
-            "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,})";
+            "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-+]).{6,})";
 
     public PasswordValidator(){
         pattern = Pattern.compile(PASSWORD_REGEX);

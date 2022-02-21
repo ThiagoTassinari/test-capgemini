@@ -1,40 +1,28 @@
 package Challange02;
 
+import java.util.Scanner;
+
 public class PasswordRegex {
     public static void main(String[] args) {
+        Scanner sc = new Scanner (System.in);
+
+        String name, password = "";
+        System.out.println("Digite seu nome:");
+        name = sc.nextLine();
+
+        System.out.println("Digite sua senha: ");
+        password = sc.nextLine();
+
         PasswordValidator passwordValidator = new PasswordValidator();
 
-        System.out.println("'peter1AB@' is valid? = "+passwordValidator.validate("peter1AB@"));
-        System.out.println("'peter4COW$' is valid?  = "+passwordValidator.validate("peter4COW$"));
-        System.out.println("'peter78Dog%#' is valid?  = "+passwordValidator.validate("peter78Dog%#"));
-
-        System.out.println("--------------------------------------------------");
-
-        /*
-         *  too short, minimum 6 characters
-         */
-        System.out.println("'p1AB@' is valid? = "+passwordValidator.validate("p1AB@"));
-
-        /*
-         *  uppercase characters is required
-         */
-        System.out.println("'peter1@' is valid? = "+passwordValidator.validate("peter1@"));
-
-
-        /*
-         *  special symbol “*” is not allow here
-         */
-        System.out.println("'peterAB2*' is valid? = "+passwordValidator.validate("peterAB2*"));
-
-        /*
-         *  digit is required
-         */
-        System.out.println("'peterAB$' is valid? = "+passwordValidator.validate("peterAB$"));
-
-
-        /*
-         *  lower case character is required
-         */
-        System.out.println("'PETER2$' is valid? = "+passwordValidator.validate("PETER2$"));
+        while(true) {
+            if(password.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-+]).{6,20}")) {
+                System.out.println("Parábens " + name + " você foi cadastrado(a) com sucesso!");
+                break;
+            } else {
+                System.out.println("Senha inválida, tente novamente.");
+                password = sc.nextLine();
+            }
+        }
     }
 }

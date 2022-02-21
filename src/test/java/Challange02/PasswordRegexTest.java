@@ -1,47 +1,50 @@
 package Challange02;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PasswordRegexTest {
-
-
+    PasswordValidator passwordValidator = new PasswordValidator();
 
     @Test
-    void main () {
-        PasswordValidator passwordValidator = new PasswordValidator();
+    @Order(1)
+    void validatePassword_EmptyString() {
+        assertFalse(passwordValidator.validate(""));
+        System.out.println("O resultado é inválido: " + passwordValidator.validate("") +
+                " - Campo requerido. Digite sua senha!");
+    }
 
-        /*
-         *  empty password
-         */
-        System.out.println("'' is valid? = "+passwordValidator.validate(""));
+    @Test
+    @Order(2)
+    void validatePassword_LengthTooShort() {    // too short, minimum 6 characters
+        assertFalse(passwordValidator.validate("ase#1"));
+        System.out.println("O resultado é inválido: " + passwordValidator.validate("ase#1") +
+                " - Digite no mínimo 6 caracteres para sua senha ser válida.");
+    }
 
-        /*
-         *  too short, minimum 6 characters
-         */
-        System.out.println("'p1AB@' is valid? = "+passwordValidator.validate("p1AB@"));
+    @Test
+    @Order(3)
+    void validatePassword_LengthTooLong() {    // too short, max 20 characters
+        assertFalse(passwordValidator.validate("ase1231231231adaasdadsq*&¨%&%#1"));
+        System.out.println("O resultado é inválido: " + passwordValidator.validate("ase1231231231adaasdadsq*&¨%&%#1") +
+                " - Digite uma senha com no mínimo 20 caracteres para sua senha ser válida.");
+    }
 
-        /*
-         *  uppercase characters is required
-         */
-        System.out.println("'peter1@' is valid? = "+passwordValidator.validate("peter1@"));
+    @Test
+    @Order(4)
+    void validatePassword_NotSpecialCharacters() {    // Password without special characters
+        assertFalse(passwordValidator.validate("Ass123"));
+        System.out.println("O resultado é inválido: " + passwordValidator.validate("Ass#12") +
+                " - Digite pelo menos 1 caracter espacial [!@#$%^&*()-+]");
+    }
 
-
-        /*
-         *  special symbol “*” is not allow here
-         */
-        System.out.println("'peterAB2*' is valid? = "+passwordValidator.validate("peterAB2*"));
-
-        /*
-         *  digit is required
-         */
-        System.out.println("'peterAB$' is valid? = "+passwordValidator.validate("peterAB$"));
-
-
-        /*
-         *  lower case character is required
-         */
-        System.out.println("'PETER2$' is valid? = "+passwordValidator.validate("PETER2$"));
+    @Test
+    @Order(5)
+    void validatePassword_Correct() {    // Password valid
+        assertTrue(passwordValidator.validate("Lordes@+12"));
+        System.out.println("O resultado é inválido: " + passwordValidator.validate("Lordes@+12") +
+                " - Parábens, senha válida");
     }
 }
